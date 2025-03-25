@@ -1,17 +1,160 @@
+body { padding: 0; margin: 0 }
+#unity-container { position: absolute }
+#unity-container.unity-desktop { left: 50%; top: 50%; transform: translate(-50%, -50%) }
+#unity-container.unity-mobile { position: fixed; width: 100%; height: 100% }
+#unity-canvas { background: #0E1725 }
+.unity-mobile #unity-canvas { width: 100%; height: 100% }
+#unity-loading-bar { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none }
+#unity-logo { width: 154px; height: 130px; background: url('unity-logo-light.png') no-repeat center }
+#unity-progress-bar-empty { width: 141px; height: 18px; margin-top: 10px; margin-left: 6.5px; background: url('progress-bar-empty-light.png') no-repeat center }
+#unity-progress-bar-full { width: 0%; height: 18px; margin-top: 10px; background: url('progress-bar-full-light.png') no-repeat center }
+#unity-footer { position: relative }
+.unity-mobile #unity-footer { display: none }
+#unity-logo-title-footer { float:left; width: 102px; height: 38px; background: url('unity-logo-title-footer.png') no-repeat center }
+#unity-build-title { float: right; margin-right: 10px; line-height: 38px; font-family: arial; font-size: 18px }
+#unity-fullscreen-button { cursor:pointer; float: right; width: 38px; height: 38px; background: url('fullscreen-button.png') no-repeat center }
+#unity-warning { position: absolute; left: 50%; top: 5%; transform: translate(-50%); background: white; padding: 10px; display: none }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --font-body: "Baskerville", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", serif;
+    --font-title: "18th Century", "Baskerville", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu;
+    --font-subtitle: "Baskerville", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu;
+}
+
+@font-face {
+    font-family: '18th Century';
+    src: url('fonts/18thCentury.ttf') format('truetype');
+}
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
-    background-color: #000000;
+    padding: 0;
+    background-color: #0E1725;
+    font-family: var(--font-body);
+    height: 100vh;
+    overflow: hidden;
 }
-img {
+
+.logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
-    animation: fadeIn 3s ease-in-out forwards;
-    width: 600px;
-    height: auto;
+    animation: logoFadeIn 1s ease-in-out forwards,
+               logoMoveAndShrink 1s ease-in-out 1.25s forwards;
 }
+
+.content {
+    text-align: center;
+    color: white;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out 1.75s forwards;
+    position: absolute;
+    top: 33vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h1 {
+    font-family: var(--font-title);
+    font-size: 5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-family: var(--font-subtitle);
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 1rem;
+    line-height: 1.5;
+}
+
+.download-button {
+    background-color: #ff616b;
+    color: #000;
+    border: 1px solid rgba(0, 0, 0, .2);
+    padding: 1rem 2.3rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: .1rem;
+    transition: all .2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.download-button span {
+    font-family: var(--font-title);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.download-button svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+}
+
+.download-button:hover {
+    transform: scale(1.05);
+    background-color: #ff616b;
+}
+
+.download-button:active {
+    transform: scale(0.98);
+}
+
+.team-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 33vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    overflow: visible;
+}
+
+.team-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out 1.75s forwards,
+               slideUp 1s ease-in-out 1.25s forwards;
+    overflow: visible;
+}
+
+@keyframes logoFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes logoMoveAndShrink {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        top: 0px;
+        left: 50%;
+        transform: translate(-50%, 0) scale(0.3);
+    }
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -19,4 +162,116 @@ img {
     100% {
         opacity: 1;
     }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes logoMoveAndShrinkReverse {
+    0% {
+        top: 20px;
+        left: 50%;
+        transform: translate(-50%, 0) scale(0.5);
+    }
+    100% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #0E1725;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    color: white;
+}
+
+.modal-content h2 {
+    font-family: var(--font-title);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.modal-content input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    color: white;
+    font-family: var(--font-body);
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+.modal-content input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modal-buttons button {
+    background-color: #ff616b;
+    color: #000;
+    border: 1px solid rgba(0, 0, 0, .2);
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: .1rem;
+    transition: all .2s ease-in-out;
+    border-radius: 8px;
+    font-family: var(--font-title);
+}
+
+.modal-buttons button:hover {
+    transform: scale(1.05);
+    background-color: #ff616b;
+}
+
+.modal-buttons button:active {
+    transform: scale(0.98);
 }

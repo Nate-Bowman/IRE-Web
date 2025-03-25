@@ -1,11 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>GamifyIt</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Re:evolution</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <img src="GamifyIT_Logo.png" alt="My Image">
+    <img src="images/GamifyIT_Logo.png" alt="GamifyIT Logo" class="logo">
+    <div class="content">
+        <h1>Industrial Re:evolution</h1>
+        <button class="download-button" onclick="showSessionPrompt()">
+            <span>Play</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+        </button>
+    </div>
+    <div class="team-container">
+        <img src="images/rev_team.png" alt="Team" class="team-image">
+    </div>
+
+    <div id="session-modal" class="modal">
+        <div class="modal-content">
+            <h2>Enter Session Code</h2>
+            <input type="text" id="session-input" placeholder="Enter session code">
+            <div class="modal-buttons">
+                <button onclick="checkSessionCode()">Submit</button>
+                <button onclick="closeSessionPrompt()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Encoded session code string
+        const OBFUSCATED_SESSION_CODE = '0uTKvujK5ui+ZGBkaA==';
+
+        function showSessionPrompt() {
+            document.getElementById('session-modal').style.display = 'flex';
+        }
+
+        function closeSessionPrompt() {
+            document.getElementById('session-modal').style.display = 'none';
+        }
+
+        function checkSessionCode() {
+            const input = document.getElementById('session-input').value;
+            // Obfuscate input the same way for comparison
+            const obfuscatedInput = btoa(String.fromCharCode(...Array.from(input).map(c => c.charCodeAt(0) << 1)));
+            
+            if (obfuscatedInput === OBFUSCATED_SESSION_CODE) {
+                closeSessionPrompt();
+                handlePlayClick();
+            } else {
+                alert('That session code is not currently active');
+            }
+        }
+
+        function handlePlayClick() {
+            // Add reverse animation classes
+            document.querySelector('.content').style.animation = 'fadeOut 1s ease-in-out forwards';
+            document.querySelector('.team-image').style.animation = 'slideDown 1s ease-in-out forwards, fadeOut 2s ease-in-out forwards';
+            document.querySelector('.logo').style.animation = 'logoMoveAndShrinkReverse 1s linear forwards';
+            
+            // Wait for animations to complete before navigating
+            setTimeout(() => {
+                window.location.href = 'ire.html';
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
